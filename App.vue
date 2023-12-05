@@ -1,12 +1,25 @@
+<!-- App vue -->
+
 <script setup>
+// import from vue router
 import { RouterLink, RouterView } from 'vue-router'
+
+//import the navigation header - only place that has this!
 import NavigationHeader from './components/NavigationHeader.vue'
 </script>
 
+
+<!-- begin template -->
 <template>
+
+  <!-- should only have nav + router -->
   <header>
+
+    <!-- nav header -->
       <NavigationHeader></NavigationHeader>
   </header>
+
+  <!-- router -->
   <RouterView />
 </template>
 
@@ -150,7 +163,7 @@ sessions: [
 </script>
 
 
-<!-- begin styling -->
+<!-- begin styling, if needed -->
 <style scoped>
 
 </style>
