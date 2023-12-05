@@ -1,15 +1,13 @@
-<template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
-</template>
+<!-- user sessions -->
+<!-- import component needed -->
+<script setup>
+import UserSessions from '../components/UserSessions.vue';
+</script>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<!-- begin template -->
+<template>
+  <main>
+    <!-- use component - user sessions -->
+    <UserSessions />
+  </main>
+</template>
