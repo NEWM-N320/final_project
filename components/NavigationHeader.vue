@@ -19,12 +19,14 @@ nav {
   margin-top: 2rem;
 }
 
+
+/* active link class */
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  color: red;
 }
 
 nav a.router-link-exact-active:hover {
-  background-color: transparent;
+  background-color: orange;
 }
 
 nav a {
@@ -36,5 +38,4 @@ nav a {
 nav a:first-of-type {
   border: 0;
 }
-
 </style>

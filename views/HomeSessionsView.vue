@@ -12,3 +12,5 @@ import HomeSessions from '../components/HomeSessions.vue'
     <HomeSessions />
   </main>
 </template>
+
+
