@@ -6,10 +6,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 //import the views needed
 
 //home view - all sessions
-import HomeSessions from '../views/HomeSessions.vue';
+import HomeSessionsView from '../views/HomeSessionsView.vue';
 
 //user sessions - selected sessions
-import UserSessions from '../views/UserSessions.vue';
+import UserSessionsView from '../views/UserSessionsView.vue';
 
 const routes =  [
 
@@ -17,20 +17,20 @@ const routes =  [
     {
       path: '/',
       name: 'home',
-      component: HomeSessions
+      component: HomeSessionsView
     },
 
     //sessions route for traveling back
     {
       path: '/sessions',
       name: 'sessions',
-      component: HomeSessions
+      component: HomeSessionsView
     },
     //user sessions - second page
     {
       path: '/mySessions',
       name: 'mySessions',
-      component: UserSessions
+      component: UserSessionsView
     }
   ]
 
