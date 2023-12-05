@@ -1,4 +1,4 @@
-## NEWM-N320: Final Project
+### NEWM-N320: Final Project
 
 # Mini Conference Application Using Vue
 
