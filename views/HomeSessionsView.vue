@@ -5,7 +5,7 @@
        <!-- holds filter btn + sess count -->
        <div class="filter-sessCount">
        <!-- filler text - display the num of sessions -->
-    <p class="ses-count">Session count here</p>
+    <p class="ses-count">{{ changeSessionCount }}</p>
     <!-- slotted btn to clear filter -->
     <!-- will clear the filters only when the filters are active -->
     <!-- onclick to clear the filter and revert to original results -->
@@ -51,14 +51,7 @@
   </div>
 </template>
 
-<script setup>
-import { toHandlerKey } from 'vue';
-
-// Import the 'sessions' prop
-// const { sessions } = defineProps(['sessions']);
-</script>
-
-<!-- other script -->
+<!-- begin script -->
 <script>
 export default {
 
@@ -140,6 +133,19 @@ filteredSessions(){
 isFilterActive() {
   //return the specific filter if there is a filter active
   return this.presenterFilter !== '' || this.tagFilter !== '';
+},
+
+//changing the count of the sessions
+changeSessionCount() {
+  //create a total sessions var = will calculate the length of the sessions
+  const totalSessions = this.sessions.length;
+
+  //same gist but for filtered sessions
+  const totalSessionsFiltered = this.filteredSessions.length;
+
+  //return a ternery: if there is a filter, say __ of 10 sessions
+  //if there is no filter, say "10 sessions"
+  return this.isFilterActive ? `${totalSessionsFiltered} of ${totalSessions} sessions: ` : `${totalSessions} sessions:`;
 }
 },
 
@@ -207,12 +213,6 @@ clearFilter() {
   this.presenterFilter = '';
   this.tagFilter = '';
 }
-  },
-
-
-  //begin emits
-  emits: {
-
   }
 }
 </script>
@@ -223,7 +223,6 @@ clearFilter() {
   color: #000;
   font-size: 30px;
 }
-
 
 /* holder for filter btn and session count */
 .filter-sessCount{
@@ -255,6 +254,13 @@ justify-content: space-between;
 .sess-title{
   width: 600px;
   color: #a06f5f;
+}
+
+/* session count */
+.ses-count {
+  font-size: 17px;
+  font-style: italic;
+  margin-left: 10px;
 }
 
 /* presenter text and time */
