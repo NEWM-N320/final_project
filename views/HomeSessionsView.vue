@@ -24,7 +24,7 @@
       <div class="pres-time">
          <p class="presenter">Presented by: <span class="span-pres">
         {{ session.presenter }}</span></p>
-        <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime) }}</p>
+        <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime, session.sDay) }}</p>
       </div>
      
       <!-- line break in btwn -->
@@ -58,41 +58,72 @@ export default {
   data() {
 
     return {
+      //validating session data 
+      session: {
 
-    } 
-    
-  },
+      //start id at 0, work way down (int)
+      id: 0,
+
+      //start title as empty (string)
+      title: '',
+
+      //start desc as empty (string)
+      desc: '',
+
+      //start tags empty (arr)
+      tags: [],
+
+      //start sTime as if it were 0 o'clock (int)
+      sTime: 0,
+
+      //start sDay as empty (string)
+      sDay: '',
+
+      //start added as false (boolean)
+      added: false,
+    }
+  }
+},
   methods: {
     //twelve hour func 
-    //taking the military time as a param
-  TwelveHourFormat(militaryTime) {
-  
-    // convert the military time into a string since it is a number
-    if (typeof militaryTime === 'number') {
-      militaryTime = militaryTime.toString();
-    }
+    TwelveHourFormat(sTime) {
+  // validating sTime to make sure it is only military values
+  const validTimes = [8, 10, 13, 15, 20];
 
-    //ensure that even single digit times changes. using padStart() to do this
-    militaryTime = militaryTime.padStart(2, '0');
+  //if it the valid times do not include any vals in sTime
+  if (!validTimes.includes(sTime)) {
 
-    //create a new Date() func, convert the military time
-    const date = new Date(`2000-01-01T${militaryTime}:00`);
+    //console out the err w a msg
+    console.error('Invalid Time:', sTime);
 
-    //set the new var standard time read as a string
-    const standardTime = date.toLocaleTimeString('en-US', {
-
-      //hour and minute is numeric
-      hour: 'numeric',
-      minute: 'numeric',
-
-      //it is in 12 hour format
-      hour12: true,
-    });
-
-
-    //return the new time, will have am or pm depending what time it is
-    return standardTime;
+    //return an empty time
+    return ''; 
   }
+
+ //convert the military time to a string, since its default is an int
+  let militaryTime = sTime.toString();
+
+  //making sure single digit times change
+  //using padStart to acheive this
+  militaryTime = militaryTime.padStart(2, '0');
+
+  //create a new Date() func and convert military time
+  const date = new Date(`2000-01-01T${militaryTime}:00`);
+
+//make sure new standard time is also a string
+  const standardTime = date.toLocaleTimeString('en-US', {
+    // Hour and minute are numeric
+    hour: 'numeric',
+    minute: 'numeric',
+
+    //making sure we are in 12 hr format
+    hour12: true,
+  });
+
+  //return the new time, will have AM or PM depending on what time it is
+  return standardTime;
+}
+
 }
 }
 </script>
@@ -114,11 +145,13 @@ justify-content: space-between;
 /* entire session styling */
 .entire-session {
   border: 1px solid black;
-  padding: 10px;
-  background-color: antiquewhite;
+  padding: 20px;
+  background-color: #dad5ce;
   border-radius: 20px;
   margin-bottom: 30px;
   width: 900px;
+  box-shadow: 5px 10px 18px #47464557;
+
 }
 
 /* session title and btn holder  */
@@ -131,11 +164,12 @@ justify-content: space-between;
 /* session title */
 .sess-title{
   width: 600px;
-  color: red;
+  color: #a06f5f;
 }
 
 /* presenter text and time */
 .pres-time {
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -143,13 +177,14 @@ justify-content: space-between;
 
 /* presenter span tag */
 .span-pres{
-  color: darkblue;
+  font-weight: bold;
+  color: #634f5c;
 }
 
 /* hr */
 hr {
-  background-color: black;
-  height: 0.45px;
+  background-color: #fff;
+  height: 1px;
 }
 
 /* tags and categories */
