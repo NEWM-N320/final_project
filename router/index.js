@@ -5,11 +5,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 //import the views needed
 
-//home view - all sessions
+//home - all sessions
 import HomeSessions from '../components/HomeSessions.vue';
 
 //user sessions - selected sessions
-import UserSessionsView from '../views/UserSessionsView.vue';
+import UserSessions from '../components/UserSessions.vue';
 
 const routes =  [
 
@@ -30,7 +30,7 @@ const routes =  [
     {
       path: '/mySessions',
       name: 'mySessions',
-      component: UserSessionsView
+      component: UserSessions
     }
   ]
 

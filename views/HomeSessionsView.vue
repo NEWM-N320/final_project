@@ -4,7 +4,7 @@
     <p class="intro">Conference Session Information</p>
        <!-- holds filter btn + sess count -->
        <div class="filter-sessCount">
-       <!-- filler text - display the num of sessions -->
+       <!--display the num of sessions -->
     <p class="ses-count">{{ changeSessionCount }}</p>
     <!-- slotted btn to clear filter -->
     <!-- will clear the filters only when the filters are active -->
@@ -28,6 +28,7 @@
       <div class="pres-time">
         <!-- for each presenter, using the presenter key in sessions, invoke the func thatll filter results by presenters -->
          <p class="presenter">Presented by: <span class="span-pres" @click="filterPresenters(session.presenter)">{{ session.presenter }}</span></p>
+         <!-- time and day  -->
         <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime, session.sDay) }}</p>
       </div>
      
