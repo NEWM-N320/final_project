@@ -18,9 +18,11 @@
       <!-- holds title and btn   -->
       <div class="sessTitle-btn">
          <h2 class="sess-title">{{ session.title }}</h2>
-      <!-- btn to add item to user ses  - fix later-->
-     <SlottedButton>Add Item</SlottedButton>
-      </div>
+      <!-- btn to add item to user session-->
+<!-- Update the SlottedButton usage -->
+<SlottedButton @click="checkUserSessions(session)">
+  {{ session.added ? 'Remove Item' : 'Add Item' }}</SlottedButton>
+     </div>
 
       <!-- holds the presenter + time -->
       <div class="pres-time">
@@ -87,6 +89,8 @@ export default {
 
     //empty - no tags chosen
     tagFilter: '',
+
+    newSessions: [], //empty arr for now, will have items added
   }
 },
 
@@ -212,7 +216,39 @@ filterTags(tag) {
 clearFilter() {
   this.presenterFilter = '';
   this.tagFilter = '';
+},
+
+//check the user sessions if anything was added
+checkUserSessions(session) {
+  console.log('checkUserSessions method is called!');
+  session.added = !session.added;
+
+  if (session.added) {
+    this.addedUserSession(session);
+  } else {
+    this.removedUserSession(session);
+  }
+
+      
+    },
+
+//add to user sessions
+addedUserSession(session) {
+  //push the user sessions to arr
+  this.newSessions.push(session);
+},
+
+//remove from user sessions
+removedUserSession(session) {
+  //finding by idx. will locate it as long as idx in both arr match up
+  const index = this.newSessions.findIndex(newSessions => newSessions.id === session.id);
+
+  //as long as the idx exist, remove from arr. using splice to do this
+  if (index !== -1) {
+    this.newSessions.splice(index, 1);
+  }
 }
+
   }
 }
 </script>

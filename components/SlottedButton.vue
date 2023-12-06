@@ -1,10 +1,22 @@
 <!-- slot btn -->
 <template>
-        <button class="slotted-btn">
+        <button @click="onClick" class="slotted-btn">
                 <slot></slot>
         </button>
 </template>
 
+<script>
+export default {
+  props: {
+    buttonText: String, // Add this line
+  },
+  methods: {
+    onClick() {
+      this.$emit('click');
+    },
+  },
+};
+</script> 
 
 <!-- styling for btn -->
 <style scoped>
