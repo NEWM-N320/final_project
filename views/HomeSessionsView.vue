@@ -1,7 +1,7 @@
 <!-- HomeSessionsView.vue -->
 <template>
   <div style="width: 850px; margin: 0 auto;">
-    <h1 class="intro">Conference Session Information</h1>
+    <p class="intro">Conference Session Information</p>
        <!-- holds filter btn + sess count -->
        <div class="filter-sessCount">
        <!-- filler text - display the num of sessions -->
@@ -17,7 +17,7 @@
       <div class="sessTitle-btn">
          <h2 class="sess-title">{{ session.title }}</h2>
       <!-- btn to add item to user ses  - fix later-->
-      <button>Add Item</button> 
+     <SlottedButton>Add Item</SlottedButton>
       </div>
 
       <!-- holds the presenter + time -->
@@ -31,7 +31,7 @@
       <hr>
 
       <!-- description  -->
-      <p class="description">Description: {{ session.desc }}</p>
+      <p class="description">{{session.desc}}</p>
 
       <!-- holds the tags -->
       <div class="tagging">
@@ -39,7 +39,8 @@
         <p class="tag-text">Categories:</p>
 
         <!-- buttns w all tags -->
-        <button v-for="tag in session.tags" :key="tag">{{ tag }}</button>
+        <TagsSlottedButton v-for="tag in session.tags" :key="tag">{{ tag }}
+        </TagsSlottedButton>
       </div>
     </div>
     </div>
@@ -132,6 +133,7 @@ export default {
 /* h1 that is intro */
 .intro {
   color: #000;
+  font-size: 30px;
 }
 
 
@@ -181,12 +183,31 @@ justify-content: space-between;
   color: #634f5c;
 }
 
+.span-pres:hover{
+  cursor: pointer;
+  color: #362b32 ;
+}
+
 /* hr */
 hr {
   background-color: #fff;
   height: 1px;
 }
 
-/* tags and categories */
 
+/* desc of sessions */
+.description{
+  font-size: 17px;
+}
+/* tags and categories */
+.tagging {
+  display: flex;
+  align-items: center;
+}
+
+/* tag text */
+.tag-text{
+  font-size: 17px;
+  margin-right: 20px;
+}
 </style>

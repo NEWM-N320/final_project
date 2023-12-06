@@ -59,7 +59,7 @@ nav a.router-link-exact-active {
   background-color: #957d5e;
 }
 
-nav a.router-link-exact-active:hover {
+.aLink:hover {
   background-color: #272119;
   color: #fff
 }
