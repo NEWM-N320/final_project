@@ -1,6 +1,6 @@
 <!-- HomeSessionsView.vue -->
 <template>
-  <div>
+  <div style="width: 850px; margin: 0 auto;">
     <h1 class="intro">Conference Session Information</h1>
        <!-- holds filter btn + sess count -->
        <div class="filter-sessCount">
@@ -24,7 +24,7 @@
       <div class="pres-time">
          <p class="presenter">Presented by: <span class="span-pres">
         {{ session.presenter }}</span></p>
-        <p class="time"> {{ session.sDay }} at {{ session.sTime }}</p>
+        <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime) }}</p>
       </div>
      
       <!-- line break in btwn -->
@@ -52,10 +52,55 @@
 const { sessions } = defineProps(['sessions']);
 </script>
 
+<!-- other script -->
+<script>
+export default {
+  data() {
+
+    return {
+
+    } 
+    
+  },
+  methods: {
+    //twelve hour func 
+    //taking the military time as a param
+  TwelveHourFormat(militaryTime) {
+  
+    // convert the military time into a string since it is a number
+    if (typeof militaryTime === 'number') {
+      militaryTime = militaryTime.toString();
+    }
+
+    //ensure that even single digit times changes. using padStart() to do this
+    militaryTime = militaryTime.padStart(2, '0');
+
+    //create a new Date() func, convert the military time
+    const date = new Date(`2000-01-01T${militaryTime}:00`);
+
+    //set the new var standard time read as a string
+    const standardTime = date.toLocaleTimeString('en-US', {
+
+      //hour and minute is numeric
+      hour: 'numeric',
+      minute: 'numeric',
+
+      //it is in 12 hour format
+      hour12: true,
+    });
+
+
+    //return the new time, will have am or pm depending what time it is
+    return standardTime;
+  }
+}
+}
+</script>
+
 <style scoped>
 /* h1 that is intro */
 .intro {
-  color: orange;
+  color: #000;
 }
 
 
@@ -71,8 +116,9 @@ justify-content: space-between;
   border: 1px solid black;
   padding: 10px;
   background-color: antiquewhite;
-  margin-bottom: 30px;
   border-radius: 20px;
+  margin-bottom: 30px;
+  width: 900px;
 }
 
 /* session title and btn holder  */
