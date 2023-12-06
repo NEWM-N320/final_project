@@ -21,6 +21,8 @@ import { RouterLink } from 'vue-router';
 </template>
 
 <style>
+
+/* entire nav */
 nav {
   width: 920px;
   height: 60px;
@@ -34,6 +36,8 @@ nav {
   text-decoration: none;
 }
 
+
+/* router links */
 .aLink {
   font-size: 18px;
   height: 30px;
@@ -59,11 +63,14 @@ nav a.router-link-exact-active {
   background-color: #957d5e;
 }
 
+
+/* hover effect */
 .aLink:hover {
   background-color: #272119;
   color: #fff
 }
 
+/* styling from vue */
 nav a {
   display: inline-block;
   padding: 0 1rem;
