@@ -6,8 +6,9 @@
        <div class="filter-sessCount">
        <!-- filler text - display the num of sessions -->
     <p class="ses-count">Session count here</p>
-    <!-- slotted btn to clear filter - for now just btn -->
-    <button>Clear Filter</button>
+    <!-- slotted btn to clear filter -->
+    <FilterSlottedButton>Clear Filter</FilterSlottedButton>
+  
     </div>
     <div v-for="session in sessions" :key="session.id">
     <!-- parent div to hold one entire session -->

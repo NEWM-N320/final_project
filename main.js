@@ -11,12 +11,14 @@ import HomeSessions from './components/HomeSessions.vue';
 //user sessions
 import UserSessions from './components/UserSessions.vue';
 
-//slotted btn
+// regular slotted btn
 import SlottedButton from './components/SlottedButton.vue';
 
 //slotted btn for tags
 import TagsSlottedButton from './components/TagsSlottedButton.vue';
 
+//clear filter slotted btn
+import FilterSlottedButton from './components/FilterSlottedButton.vue';
 
 //create the app
 const app = createApp(App)
@@ -30,4 +32,5 @@ app.component('HomeSessions', HomeSessions);
 app.component('UserSessions', UserSessions);
 app.component('SlottedButton', SlottedButton);
 app.component('TagsSlottedButton', TagsSlottedButton);
+app.component('FilterSlottedButton', FilterSlottedButton);
 app.mount('#app')
