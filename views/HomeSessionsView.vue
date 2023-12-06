@@ -222,7 +222,8 @@ clearFilter() {
 //check the user sessions if anything was added
 checkUserSessions(session) {
   console.log('checkUserSessions method is called!');
-  session.added = !session.added;
+
+  session.added = !session.added; // Vue automatically makes this reactive
 
   if (session.added) {
     this.addedUserSession(session);
@@ -230,7 +231,7 @@ checkUserSessions(session) {
     this.removedUserSession(session);
   }
 
-      
+  console.log('newSessions after update:', this.newSessions);
     },
 
 //add to user sessions

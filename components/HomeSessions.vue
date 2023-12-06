@@ -130,9 +130,6 @@ const sessions = [
         sDay: "Saturday",
         added: false
       }
+
 ];
 </script>
-
-<style scoped>
-/* Add your styles if needed */
-</style>
