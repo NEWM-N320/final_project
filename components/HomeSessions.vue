@@ -200,21 +200,37 @@ clearFilter() {
   this.tagFilter = '';
 },
 
+
+//add an item to the arr
+//passing the session and the id
 addItem(session, idx) {
+
+  //check to see if userSessions includes an id from session arr
   const isAdded = this.userSessions.includes(session.id);
+
+  //conditional for which emit to use depending on state of obj
     const eventName = isAdded ? 'remove-item' : 'add-item';
 
+
+    //if it is added to arr
     if (isAdded) {
+      //find the index off userSessions and session
       const index = this.userSessions.indexOf(session.id);
+
+      //be able to remove the session from the arr
       this.userSessions.splice(index, 1);
-    } else {
+    } else { //if not added
+
+      //push the arr id into userSession
       this.userSessions.push(session.id);
     }
 
+    //emit the event name, the session, and the id
     this.$emit(eventName, session, idx);
   },
 },
 
+//emits 
 emits: ['add-item', 'remove-item'],
   }
 
