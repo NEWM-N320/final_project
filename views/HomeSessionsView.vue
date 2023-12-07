@@ -1,345 +1,141 @@
+<script setup>
+import HomeSessions from "../components/HomeSessions.vue";
+</script>
 <!-- HomeSessionsView.vue -->
 <template>
-  <div style="width: 850px; margin: 0 auto;">
-    <p class="intro">Conference Session Information</p>
-       <!-- holds filter btn + sess count -->
-       <div class="filter-sessCount">
-       <!--display the num of sessions -->
-    <p class="ses-count">{{ changeSessionCount }}</p>
-    <!-- slotted btn to clear filter -->
-    <!-- will clear the filters only when the filters are active -->
-    <!-- onclick to clear the filter and revert to original results -->
-    <FilterSlottedButton v-if="isFilterActive" @click="clearFilter">Clear Filter</FilterSlottedButton>
-    </div>
-    <div v-for="session in filteredSessions" :key="session.id">
-    <!-- parent div to hold one entire session -->
-    <div class="entire-session">
-      <!-- session display info -->
-      <!-- holds title and btn   -->
-      <div class="sessTitle-btn">
-         <h2 class="sess-title">{{ session.title }}</h2>
-      <!-- btn to add item to user session-->
-<!-- Update the SlottedButton usage -->
-<SlottedButton @click="checkUserSessions(session)">
-  {{ session.added ? 'Remove Item' : 'Add Item' }}</SlottedButton>
-     </div>
-
-      <!-- holds the presenter + time -->
-      <div class="pres-time">
-        <!-- for each presenter, using the presenter key in sessions, invoke the func thatll filter results by presenters -->
-         <p class="presenter">Presented by: <span class="span-pres" @click="filterPresenters(session.presenter)">{{ session.presenter }}</span></p>
-         <!-- time and day  -->
-        <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime, session.sDay) }}</p>
-      </div>
-     
-      <!-- line break in btwn -->
-      <hr>
-
-      <!-- description  -->
-      <p class="description">{{session.desc}}</p>
-
-      <!-- holds the tags -->
-      <div class="tagging">
-        <!-- tag text -->
-        <p class="tag-text">Categories:</p>
-
-        <!-- btns w all tags -->
-        <!-- for all tagsm using the tag key in sessions, invoke func thatll filter results by tags -->
-        <TagsSlottedButton v-for="tag in session.tags" :key="tag" @click="filterTags(tag)">{{ tag }}
-        </TagsSlottedButton>
-      </div>
-    </div>
-    </div>
-  
+  <div>
+    <HomeSessions :sessions="sessions"/>
   </div>
 </template>
-
-<!-- begin script -->
 <script>
 export default {
-
   data() {
-
     return {
-      //validating session data 
-      session: {
-      //start id at 0, work way down (int)
-      id: 0,
+    sessions: [
+      //return the sessions arr given
 
-      //start title as empty (string)
-      title: '',
+//first session
+      {
+        id: 1,
+        title: "Beyond Request/Response: Why and how we should change the way we build web applications",
+        desc: "As web developers, we have been building web applications the same way for 25 years. We send a request, and we receive a response. We might get a whole page back, or we might get some data to render, but the common thread for almost every web application that has ever been built is the request/response cycle. What if we did not have to do it this way? What kind possibilities would open up to us?",
+        presenter: "Chris Nelson",
+        tags: ["Javascript", "Front End", "Programming"],
+        sTime: 8,
+        sDay: "Thursday",
+        added: false
+      },
 
-      //start desc as empty (string)
-      desc: '',
+      //second session
+      {
+        id: 2,
+        title: "Build a Modern Single Page Application with Vue",
+        desc: "You will learn the latest tools and patterns Vue offers for building reusable and testable UI code. You will get hands-on practice scaling an app to multiple pages using routing and state management libraries. At the end of this workshop, you will be ready to build complex and responsive front-end applications.",
+        presenter: "Matt Burke",
+        tags: ["Javascript", "Front End"],
+        sTime: 13,
+        sDay: "Friday",
+        added: false
+      },
 
-      //start tags empty (arr)
-      tags: [],
+      //third session
+      {
+        id: 3,
+        title: "Building a Web Component Library",
+        desc: "Web components have been around for a long time (since HTML 5 became a thing), but there has not been a lot of attention given to them until recently. Now, tech organizations worldwide are adopting them and finding tremendous efficiency in creating framework-agnostic reusable components to build their Design System component libraries and applications.",
+        presenter: "Burton Smith",
+        tags: ["Javascript", "Front End", "CSS", "UI/UX"],
+        sTime: 10,
+        sDay: "Saturday",
+        added: false
+      },
 
-      //start sTime as if it were 0 o'clock (int)
-      sTime: 0,
+      //fourth session
+      {
+        id: 4,
+        title: "Debugging JavaScript and React",
+        desc: "As developers, we spend much of our time debugging apps - often code we didn't even write. Sadly, few developers have ever been taught how to approach debugging - it's something most of us learn through painful experience. The good news is you _can_ learn how to debug effectively, and there's several key techniques and tools you can use for debugging JS and React apps.",
+        presenter: "Mark Erikson",
+        tags: ["Javascript", "Front End", "React"],
+        sTime: 8,
+        sDay: "Saturday",
+        added: false
+      },
 
-      //start sDay as empty (string)
-      sDay: '',
+      //fifth session
+      {
+        id: 5,
+        title: "Accessibility Auditing: Getting Started with Accessibility",
+        desc: "This workshop is for people that are just starting or want to get started learning accessibility and how to audit. Or for the people that are in Accessibility that want a refresher or are looking to change their workflows.",
+        presenter: "Todd Libby",
+        tags: ["Accessibility", "UI/UX"],
+        sTime: 8,
+        sDay: "Friday",
+        added: false
+      },
 
-      //start added as false (boolean)
-      added: false,
-    },
-    
-    //empty off the bat - no filter chosen yet
-    presenterFilter: '',
+      //sixth session
+      {
+        id: 6,
+        title: "Designing Effective Unit Tests for React",
+        desc: "React has great tools for Unit Testing component. This does not mean testing is easy. There are still a lot of questions you have to figure out for yourself: How many component tests should you write vs end-to-end tests or lower-level unit tests? How can you test a certain line of code that is tricky to test? And what in the world are you supposed to do about that persistent act() warning?",
+        presenter: "Matt Burke",
+        tags: ["Front End", "React", "Code Quality"],
+        sTime: 13,
+        sDay: "Friday",
+        added: false
+      },
 
-    //empty - no tags chosen
-    tagFilter: '',
+      //seventh session
+      {
+        id: 7,
+        title: "Async/Await from the Ground Up",
+        desc: "This session is a \"re-introduction\" to async and await. It covers what the keywords mean and - just as importantly - what they *don't* mean. We'll be covering What You Need To Know, including several different conceptual models of async/await that you can switch between at will. This refresher course will take a look at the common async best practices with a careful examination of why they're best practices and when to ignore the best practices. We'll be including some semi-advanced topics (specifically ValueTasks, asynchronous disposal, and Channels) to round out techniques for modern asynchronous development.",
+        presenter: "Stephen Cleary",
+        tags: ["Front End", "Code Quality"],
+        sTime: 15,
+        sDay: "Friday",
+        added: false
+      },
 
-    newSessions: [], //empty arr for now, will have items added
-  }
-},
+      //eighth session
+      {
+        id: 8,
+        title: "Building a Full-Stack Application with Flutter and Dart",
+        desc: "For the past few years, Flutter has revolutionized mobile app development by allowing developers to build high-performance, cross-platform applications with ease. However, building a full-stack application can be a challenging task because we often find ourselves juggling multiple technologies to solve problems across an application stack.",
+        presenter: "Ryan Edge",
+        tags: ["Front End", "Mobile", "Cloud"],
+        sTime: 20,
+        sDay: "Friday",
+        added: false
+      },
 
-//begin props
-props: {
-  sessions: Array,
-},
+      //ninth session
+      {
+        id: 9,
+        title: "One app, multiple platforms: How Cross Platform Actually Works",
+        desc: "Today's solutions for cross platform development all aim to provide developers a better way to build their apps. Build your app in a certain way, and you can ship it to multiple targets (iOS, Android, Web, etc.) with ease. But not all solutions are created equal, and it can be difficult to understand the benefits of one solution over another.",
+        presenter: "Mark Erikson",
+        tags: ["Javascript", "Mobile"],
+        sTime: 15,
+        sDay: "Thursday",
+        added: false
+      },
 
-//begin computed methods
-computed: {
+      //tenth session
+      {
+        id: 10,
+        title: "Watch this! Building a Health app for Wear OS",
+        desc: "During this talk, we will explore building for this tiny screen using Compose for Wear OS, a declarative framework for creating watch interfaces quickly and easily optimized for the screen shape and size, and the Health Services APIs, an intermediary to the various sensors and algorithms on the the watch that provide data related to activity, exercise, and health. With these tools, we will be able to create a beautiful and efficient wear app that can help you track your health goals!",
+        presenter: "Sierra OBryan",
+        tags: ["Hardware", "Mobile"],
+        sTime: 10,
+        sDay: "Saturday",
+        added: false
+      }
 
-//begin filtering content
-
-//filter through presenters
-allPresenters() {
-  //return a new session arr w only the appropriate presenters
-  return [...new Set(this.sessions.map(session => session.presenter))];
-},
-
-//filter through tags
-allTags() {
-  //return a new session arr w only the appropriate tags
-  return [...new Set(this.sessions.map(session => session.tags))];
-},
-
-//filtered sessions based on specific tags or presenters
-filteredSessions(){
-  //using filter method to filter the arr based on choices
-  return this.sessions.filter(session => {
-    //creating a const to find the right presenter
-    //using includes to make sure the sessions chosen include the right presenter
-    const rightPresenter = session.presenter.includes(this.presenterFilter) || this.presenterFilter === '';
-
-    //creating a const to find the right tags
-    //using the some to make sure the right tag shows up at least one
-    const rightTags = session.tags.some(tag => tag.includes(this.tagFilter)) || this.tagFilter === '';
-
-    //show the results if there is a match for presenter OR tags
-    return rightPresenter && rightTags;
-  });
-},
-
-//checking if any filter is active
-isFilterActive() {
-  //return the specific filter if there is a filter active
-  return this.presenterFilter !== '' || this.tagFilter !== '';
-},
-
-//changing the count of the sessions
-changeSessionCount() {
-  //create a total sessions var = will calculate the length of the sessions
-  const totalSessions = this.sessions.length;
-
-  //same gist but for filtered sessions
-  const totalSessionsFiltered = this.filteredSessions.length;
-
-  //return a ternery: if there is a filter, say __ of 10 sessions
-  //if there is no filter, say "10 sessions"
-  return this.isFilterActive ? `${totalSessionsFiltered} of ${totalSessions} sessions: ` : `${totalSessions} sessions:`;
-}
-},
-
-//begin methods
-  methods: {
-    //twelve hour func 
-    TwelveHourFormat(sTime) {
-  // validating sTime to make sure it is only military values
-  const validTimes = [8, 10, 13, 15, 20];
-
-  //if it the valid times do not include any vals in sTime
-  if (!validTimes.includes(sTime)) {
-
-    //console out the err w a msg
-    console.error('Invalid Time:', sTime);
-
-    //return an empty time
-    return ''; 
-  }
-
- //convert the military time to a string, since its default is an int
-  let militaryTime = sTime.toString();
-
-  //making sure single digit times change
-  //using padStart to acheive this
-  militaryTime = militaryTime.padStart(2, '0');
-
-  //create a new Date() func and convert military time
-  const date = new Date(`2000-01-01T${militaryTime}:00`);
-
-//make sure new standard time is also a string
-  const standardTime = date.toLocaleTimeString('en-US', {
-    // Hour and minute are numeric
-    hour: 'numeric',
-    minute: 'numeric',
-
-    //making sure we are in 12 hr format
-    hour12: true,
-  });
-
-  //return the new time, will have AM or PM depending on what time it is
-  return standardTime;
-},
-
-//filtering methods
-
-//set the presenter filter, clear tag filter
-filterPresenters(presenter) {
-  //make the presenter filter match its appropriate person
-  this.presenterFilter = presenter;
-  //clear the tag filter
-  this.tagFilter = '';
-},
-
-//set the tag filter, clear presenter filter
-filterTags(tag) {
-  //make the tag filter match its appropriate tag
-  this.tagFilter = tag;
-  //clear the presenter filter
-  this.presenterFilter = '';
-},
-
-//clear both filters when btn is clicked 
-clearFilter() {
-  this.presenterFilter = '';
-  this.tagFilter = '';
-},
-
-//check the user sessions if anything was added
-checkUserSessions(session) {
-  console.log('checkUserSessions method is called!');
-
-  session.added = !session.added; // Vue automatically makes this reactive
-
-  if (session.added) {
-    this.addedUserSession(session);
-  } else {
-    this.removedUserSession(session);
-  }
-
-  console.log('newSessions after update:', this.newSessions);
-    },
-
-//add to user sessions
-addedUserSession(session) {
-  //push the user sessions to arr
-  this.newSessions.push(session);
-},
-
-//remove from user sessions
-removedUserSession(session) {
-  //finding by idx. will locate it as long as idx in both arr match up
-  const index = this.newSessions.findIndex(newSessions => newSessions.id === session.id);
-
-  //as long as the idx exist, remove from arr. using splice to do this
-  if (index !== -1) {
-    this.newSessions.splice(index, 1);
-  }
-}
-
+]
+    }
   }
 }
 </script>
-
-<style scoped>
-/* h1 that is intro */
-.intro {
-  color: #000;
-  font-size: 30px;
-}
-
-/* holder for filter btn and session count */
-.filter-sessCount{
-display: flex;
-align-items: center;
-justify-content: space-between;
-}
-
-/* entire session styling */
-.entire-session {
-  border: 1px solid black;
-  padding: 20px;
-  background-color: #dad5ce;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  width: 900px;
-  box-shadow: 5px 10px 18px #47464557;
-
-}
-
-/* session title and btn holder  */
-.sessTitle-btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* session title */
-.sess-title{
-  width: 600px;
-  color: #a06f5f;
-}
-
-/* session count */
-.ses-count {
-  font-size: 17px;
-  font-style: italic;
-  margin-left: 10px;
-}
-
-/* presenter text and time */
-.pres-time {
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* presenter span tag */
-.span-pres{
-  font-weight: bold;
-  color: #634f5c;
-}
-
-.span-pres:hover{
-  cursor: pointer;
-  color: #362b32 ;
-}
-
-/* hr */
-hr {
-  background-color: #fff;
-  height: 1px;
-}
-
-
-/* desc of sessions */
-.description{
-  font-size: 17px;
-}
-/* tags and categories */
-.tagging {
-  display: flex;
-  align-items: center;
-}
-
-/* tag text */
-.tag-text{
-  font-size: 17px;
-  margin-right: 20px;
-}
-</style>
