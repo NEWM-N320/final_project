@@ -1,10 +1,11 @@
+<!-- HomeSessionsView.vue -->
 <script setup>
 import HomeSessions from "../components/HomeSessions.vue";
 </script>
 <!-- HomeSessionsView.vue -->
 <template>
   <div>
-    <HomeSessions :sessions="sessions" @toggle-item-status="toggleItemStatus"/>
+    <HomeSessions :sessions="sessions" @toggle-item-status="handleToggleItemStatus"/>
   </div>
 </template>
 <script>
@@ -134,17 +135,26 @@ export default {
         added: false
       }
 
-]
+],
+userSessions: []
     }
   },
 
   methods: {
-    toggleItemStatus(sessionId) {
-      const session = this.sessions.find((s) => s.id === sessionId);
-    if (session) {
-      session.added = !session.added;
-    }
-  }
-}
+    handleToggleItemStatus(sessionId) {
+      if (!this.userSessions.includes(sessionId)) {
+        const session = this.sessions.find((s) => s.id === sessionId);
+
+        if(session) {
+          this.userSessions.push(sessionId);
+        } else {
+          const index = this.userSessions.indexOf(sessionId);
+          this.userSessions.splice(index, 1);
+        }
+      }
+    },
+},
+emits: ['toggle-item-status'],
+
 }
 </script>

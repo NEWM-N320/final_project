@@ -1,3 +1,4 @@
+
 <!-- UserSessions.vue -->
 <template>
   <div style="width: 850px; margin: 0 auto;">
@@ -7,14 +8,14 @@
      <!-- display the num of sessions -->
      <p class="ses-count">{{ userSessionCount }}</p>
      <!-- for each session in userSession -->
-     <div v-for="userSession in userSessions" :key="userSession.id">
+     <div v-for="sessionId in userSessions" :key="sessionId">
       <!-- div to hold all session w info -->
       <div class="user-sess-parent">
-        <!-- session title added -->
-        <h2 class="sess-title">{{ userSession.title }}</h2>
-
-        <!-- session time and day  -->
-           <p class="time"> {{ userSession.sDay }} at {{ TwelveHourFormat(userSession.sTime, userSession.sDay) }}</p>
+        <p class="session-info">
+          title: {{ getSessionTitle(sessionId) }}
+          Time: {{ TwelveHourFormat(getSessionTime(sessionId)) }} |
+          Day: {{ getSessionDay(sessionId) }}
+        </p>
       </div>
     </div>
   </div>
@@ -25,6 +26,7 @@ export default {
 //begin props
  props: {
     userSessions: Array,
+    sessions: Array,
   },
   //being computed methods
   computed: {
@@ -78,6 +80,27 @@ export default {
   //return the new time, will have AM or PM depending on what time it is
   return standardTime;
 },
+
+ // Get session title based on session ID
+ getSessionTitle(sessionId) {
+      const session = this.sessions.find((s) => s.id === sessionId);
+      return session ? session.title : '';
+    },
+
+    // Get session time based on session ID
+    getSessionTime(sessionId) {
+      const session = this.sessions.find((s) => s.id === sessionId);
+      return session ? session.sTime : 0;
+    },
+
+       // Get session day based on session ID
+    getSessionDay(sessionId) {
+      const session = this.sessions.find((s) => s.id === sessionId);
+      return session ? session.sDay : '';
+    },
+
+
+
   }
   
 };

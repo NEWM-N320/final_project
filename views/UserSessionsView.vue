@@ -1,10 +1,8 @@
-<!-- user sessions view.vue -->
-<!-- import view needed -->
+<!-- UserSessionsView.vue -->
 <script setup>
 import UserSessions from '../components/UserSessions.vue';
 </script>
 
-<!-- begin template -->
 <template>
   <div>
     <!-- use component - user sessions -->
@@ -15,21 +13,15 @@ import UserSessions from '../components/UserSessions.vue';
 <script>
 export default {
   data() {
-    return{
+    return {
       userSessions: [],
     }
   },
-
-  methods: {
-    toggleItemStatus(sessionId) {
-      // Find the corresponding user session by ID
-      const userSession = this.userSessions.find((s) => s.id === sessionId);
-
-      if (userSession) {
-        // Toggle the 'added' property
-        userSession.added = !userSession.added;
-      }
-  }
-}
+  // Add a log statement to check the received data
+  watch: {
+    userSessions(newValue) {
+      console.log('UserSessionsView - userSessions:', newValue);
+    },
+  },
 }
 </script>
