@@ -6,15 +6,15 @@
     <p class="intro">User Sessions</p> 
      <!-- display the num of sessions -->
      <p class="ses-count">{{ userSessionCount }}</p>
-     <!-- for each session in newSessions -->
-     <div v-for="session in newSessions" :key="session.id">
+     <!-- for each session in userSession -->
+     <div v-for="userSession in userSessions" :key="userSession.id">
       <!-- div to hold all session w info -->
       <div class="user-sess-parent">
         <!-- session title added -->
-        <h2 class="sess-title">{{ session.title }}</h2>
+        <h2 class="sess-title">{{ userSession.title }}</h2>
 
         <!-- session time and day  -->
-           <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime, session.sDay) }}</p>
+           <p class="time"> {{ userSession.sDay }} at {{ TwelveHourFormat(userSession.sTime, userSession.sDay) }}</p>
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
 export default {
 //begin props
  props: {
-    newSessions: Array,
+    userSessions: Array,
   },
   //being computed methods
   computed: {
@@ -32,8 +32,8 @@ export default {
     //display the user session count
     userSessionCount() {
 
-      //conditional: check to make sure newSessions is defined before naming how many sessions are added
-      const newLength = this.newSessions ? this.newSessions.length : 0;
+      //conditional: check to make sure userSession is defined before naming how many sessions are added
+      const newLength = this.userSessions ? this.userSessions.length : 0;
       return `${newLength} sessions added:`;
     }
   },

@@ -1,22 +1,10 @@
 <!-- slot btn -->
 <template>
-        <button @click="onClick" class="slotted-btn">
+        <button class="slotted-btn">
                 <slot></slot>
         </button>
 </template>
 
-<script>
-export default {
-  props: {
-    buttonText: String, // Add this line
-  },
-  methods: {
-    onClick() {
-      this.$emit('click');
-    },
-  },
-};
-</script> 
 
 <!-- styling for btn -->
 <style scoped>
@@ -26,7 +14,7 @@ export default {
         background-color: #98a4a8;
 
         border: none;
-        font-size: 15px;
+        font-size: 14px;
         color: #fff;
         border-radius: 20px;
 }

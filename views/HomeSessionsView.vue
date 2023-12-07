@@ -4,7 +4,7 @@ import HomeSessions from "../components/HomeSessions.vue";
 <!-- HomeSessionsView.vue -->
 <template>
   <div>
-    <HomeSessions :sessions="sessions"/>
+    <HomeSessions :sessions="sessions" @toggle-item-status="toggleItemStatus"/>
   </div>
 </template>
 <script>
@@ -136,6 +136,15 @@ export default {
 
 ]
     }
+  },
+
+  methods: {
+    toggleItemStatus(sessionId) {
+      const session = this.sessions.find((s) => s.id === sessionId);
+    if (session) {
+      session.added = !session.added;
+    }
   }
+}
 }
 </script>

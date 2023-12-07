@@ -20,7 +20,7 @@
          <h2 class="sess-title">{{ session.title }}</h2>
       <!-- btn to add item to user session-->
 <!-- Update the SlottedButton usage -->
-<SlottedButton>{{ session.added ? 'Remove Item' : 'Add Item' }}</SlottedButton>
+<SlottedButton @click="() => toggleItemStatus(session)"> {{ session.added ? 'Remove Item' : 'Add Item' }}</SlottedButton>
      </div>
 
       <!-- holds the presenter + time -->
@@ -89,8 +89,6 @@ export default {
 
     //empty - no tags chosen
     tagFilter: '',
-
-    newSessions: [], //empty arr for now, will have items added
   }
 },
 
@@ -216,9 +214,22 @@ filterTags(tag) {
 clearFilter() {
   this.presenterFilter = '';
   this.tagFilter = '';
+},
+
+//toggle the item status
+toggleItemStatus(session) {
+      // Toggle the added property for the session
+      // const sessionIndex = this.sessions.findIndex((s) => s.id === session.id);
+      // if (sessionIndex !== -1) {
+      //   this.$set(this.sessions, sessionIndex, {
+      //     ...this.sessions[sessionIndex],
+      //     added: !this.sessions[sessionIndex].added,
+      //   });
+       // Emit an event to inform the parent component about the change
+       this.$emit('toggle-item-status', session.id);
+      }
 }
   }
-}
 </script>
 
 <style scoped>

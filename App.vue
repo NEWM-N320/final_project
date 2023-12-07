@@ -24,22 +24,3 @@ import NavigationHeader from './components/NavigationHeader.vue'
   <RouterView />
   </div>
 </template>
-
-
-
-<!-- begin script -->
-<script>
-export default {
-  data() {
-  
-    return {
-    //user sessions arr, empty for now
-    userSessions: [],
-    }
-  },
-  components: {
-    NavigationHeader
-},
- 
-}
-</script>
