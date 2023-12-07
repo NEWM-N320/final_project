@@ -7,7 +7,7 @@ import UserSessions from '../components/UserSessions.vue';
   <div>
     <!-- use component - user sessions -->
     <UserSessions :userSessions="userSessions" />
-  </div>
+      </div>
 </template>
 
 <script>
@@ -17,11 +17,10 @@ export default {
       userSessions: [],
     }
   },
-  // Add a log statement to check the received data
   watch: {
-    userSessions(newValue) {
-      console.log('UserSessionsView - userSessions:', newValue);
-    },
+  userSessions(newValue) {
+    console.log('UserSessionsView - Updated userSessions:', newValue);
   },
+},
 }
 </script>

@@ -19,10 +19,7 @@
       <div class="sessTitle-btn">
          <h2 class="sess-title">{{ session.title }}</h2>
       <!-- btn to add item to user session-->
-<!-- <SlottedButton @click="() => $emit('toggle-item-status', session.id)">
-  {{ userSessions.includes(session.id) ? 'Remove Item' : 'Add Item' }}
-</SlottedButton> -->
-<SlottedButton @click="toggleItemStatus(session.id)"> {{ userSessions.includes(session.id) ? "Remove Item" : "Add Item" }}</SlottedButton>
+<SlottedButton @click="addItem(session, idx)"> {{ userSessions.includes(session.id) ? 'Remove Item' : 'Add Item' }}</SlottedButton>
      </div>
 
       <!-- holds the presenter + time -->
@@ -64,34 +61,18 @@ export default {
     return {
       //validating session data 
       session: {
-      //start id at 0, work way down (int)
-      id: Number,
-
-      //start title as empty (string)
-      title: String,
-
-      //start desc as empty (string)
-      desc: String,
-
-      //start tags empty (arr)
+      id: 0,
+      title: '',
+      desc: '',
       tags: [],
-
-      //start sTime as if it were 0 o'clock (int)
-      sTime: Number,
-
-      //start sDay as empty (string)
-      sDay: String,
-
-      //start added as false (boolean)
+      sTime: 0,
+      sDay: '',
       added: false,
     },
-    
-    //empty off the bat - no filter chosen yet
     presenterFilter: '',
-
-    //empty - no tags chosen
     tagFilter: '',
     userSessions: [],
+    add: {},
   }
 },
 
@@ -219,40 +200,24 @@ clearFilter() {
   this.tagFilter = '';
 },
 
-//toggle the item status
-toggleItemStatus(sessionId) {
-      if (!this.userSessions.includes(sessionId)) {
-        const session = this.sessions.find((s) => s.id === sessionId);
+addItem(session, idx) {
+  const isAdded = this.userSessions.includes(session.id);
+    const eventName = isAdded ? 'remove-item' : 'add-item';
 
-        if (session) {
-          this.userSessions.push(sessionId);
-        }
-      } else {
-        const index = this.userSessions.indexOf(sessionId);
-        this.userSessions.splice(index, 1);
-      }
+    if (isAdded) {
+      const index = this.userSessions.indexOf(session.id);
+      this.userSessions.splice(index, 1);
+    } else {
+      this.userSessions.push(session.id);
+    }
 
-      // Emit the event to notify the parent component (HomeSessionsView)
-      this.$emit("toggle-item-status", sessionId);
-    },
-
-// toggleItemStatus(sessionId) {
-//   if (!this.userSessions.includes(sessionId)) {
-//     const session = this.sessions.find(s => s.id === sessionId);
-//     if (session) {
-//       this.userSessions.push(sessionId);
-//     } else {
-//       const index = this.userSessions.indexOf(sessionId);
-//       this.userSessions.splice(index, 1);
-//     }
-
-//     this.$emit('toggle-item-status', sessionId);
-//   }
-// }
+    this.$emit(eventName, session, idx);
   },
-  emits: ['toggle-item-status'], // Declare the emitted event
+},
 
+emits: ['add-item', 'remove-item'],
   }
+
 </script>
 
 <style scoped>

@@ -1,5 +1,4 @@
-
-<!-- UserSessions.vue -->
+<!-- UserSessionsView.vue -->
 <template>
   <div style="width: 850px; margin: 0 auto;">
 
@@ -7,15 +6,14 @@
     <p class="intro">User Sessions</p> 
      <!-- display the num of sessions -->
      <p class="ses-count">{{ userSessionCount }}</p>
-     <!-- for each session in userSession -->
-     <div v-for="sessionId in userSessions" :key="sessionId">
+     <!-- for each session in userSessions -->
+     <div v-for="session in userSessions" :key="session.id">
       <!-- div to hold all session w info -->
       <div class="user-sess-parent">
-        <p class="session-info">
-          title: {{ getSessionTitle(sessionId) }}
-          Time: {{ TwelveHourFormat(getSessionTime(sessionId)) }} |
-          Day: {{ getSessionDay(sessionId) }}
-        </p>
+        <!-- session title added -->
+        <h2 class="sess-title">{{ session.title }}</h2>
+        <!-- session time and day  -->
+           <p class="time"> {{ session.sDay }} at {{ TwelveHourFormat(session.sTime, session.sDay) }}</p>
       </div>
     </div>
   </div>
@@ -23,20 +21,18 @@
 
 <script>
 export default {
-//begin props
- props: {
-    userSessions: Array,
-    sessions: Array,
+  data() {
+    return{
+      userSessions: []
+    }
   },
   //being computed methods
   computed: {
     
     //display the user session count
     userSessionCount() {
-
-      //conditional: check to make sure userSession is defined before naming how many sessions are added
       const newLength = this.userSessions ? this.userSessions.length : 0;
-      return `${newLength} sessions added:`;
+    return `${newLength} sessions added:`;
     }
   },
 
@@ -80,28 +76,12 @@ export default {
   //return the new time, will have AM or PM depending on what time it is
   return standardTime;
 },
-
- // Get session title based on session ID
- getSessionTitle(sessionId) {
-      const session = this.sessions.find((s) => s.id === sessionId);
-      return session ? session.title : '';
-    },
-
-    // Get session time based on session ID
-    getSessionTime(sessionId) {
-      const session = this.sessions.find((s) => s.id === sessionId);
-      return session ? session.sTime : 0;
-    },
-
-       // Get session day based on session ID
-    getSessionDay(sessionId) {
-      const session = this.sessions.find((s) => s.id === sessionId);
-      return session ? session.sDay : '';
-    },
-
-
-
-  }
+  },
+  watch: {
+  userSessions(newValue) {
+    console.log('UserSessions - userSessions:', newValue);
+  },
+}
   
 };
 </script>

@@ -1,18 +1,20 @@
-<!-- HomeSessionsView.vue -->
 <script setup>
 import HomeSessions from "../components/HomeSessions.vue";
 </script>
-<!-- HomeSessionsView.vue -->
+
 <template>
   <div>
-    <HomeSessions :sessions="sessions" @toggle-item-status="handleToggleItemStatus"/>
+    <HomeSessions :sessions="sessions" @add-item="addToArray" @remove-item="removeFromArray" />
   </div>
 </template>
+
+
+
 <script>
 export default {
   data() {
     return {
-    sessions: [
+     sessions: [
       //return the sessions arr given
 
 //first session
@@ -136,25 +138,28 @@ export default {
       }
 
 ],
-userSessions: []
+    userSessions: [],
     }
   },
-
   methods: {
-    handleToggleItemStatus(sessionId) {
-      if (!this.userSessions.includes(sessionId)) {
-        const session = this.sessions.find((s) => s.id === sessionId);
+    addToArray(data) {
+    console.log('Adding to list:', data);
+    this.userSessions.push(data);
+    console.log('Updated userSessions:', this.userSessions);
+  },
 
-        if(session) {
-          this.userSessions.push(sessionId);
-        } else {
-          const index = this.userSessions.indexOf(sessionId);
-          this.userSessions.splice(index, 1);
-        }
-      }
-    },
-},
-emits: ['toggle-item-status'],
+    removeFromArray(data) {
+      console.log('Removing from list:', data);
+      this.userSessions.splice(data.id, 1);
+      console.log('Updated userSessions:', this.userSessions);
 
+    }
+    
+  },
+  watch: {
+  userSessions(newValue) {
+    console.log('HomeSessionsView - Updated userSessions:', newValue);
+  },
+}
 }
 </script>
