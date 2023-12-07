@@ -19,7 +19,6 @@
       <div class="sessTitle-btn">
          <h2 class="sess-title">{{ session.title }}</h2>
       <!-- btn to add item to user session-->
-<!-- Update the SlottedButton usage -->
 <!-- <SlottedButton @click="() => $emit('toggle-item-status', session.id)">
   {{ userSessions.includes(session.id) ? 'Remove Item' : 'Add Item' }}
 </SlottedButton> -->
@@ -221,35 +220,35 @@ clearFilter() {
 },
 
 //toggle the item status
-// toggleItemStatus(sessionId) {
-//       if (!this.userSessions.includes(sessionId)) {
-//         const session = this.sessions.find((s) => s.id === sessionId);
-
-//         if (session) {
-//           this.userSessions.push(sessionId);
-//         }
-//       } else {
-//         const index = this.userSessions.indexOf(sessionId);
-//         this.userSessions.splice(index, 1);
-//       }
-
-//       // Emit the event to notify the parent component (HomeSessionsView)
-//       this.$emit("toggle-item-status", sessionId);
-//     },
-
 toggleItemStatus(sessionId) {
-  if (!this.userSessions.includes(sessionId)) {
-    const session = this.sessions.find(s => s.id === sessionId);
-    if (session) {
-      this.userSessions.push(sessionId);
-    } else {
-      const index = this.userSessions.indexOf(sessionId);
-      this.userSessions.splice(index, 1);
-    }
+      if (!this.userSessions.includes(sessionId)) {
+        const session = this.sessions.find((s) => s.id === sessionId);
 
-    this.$emit('toggle-item-status', sessionId);
-  }
-}
+        if (session) {
+          this.userSessions.push(sessionId);
+        }
+      } else {
+        const index = this.userSessions.indexOf(sessionId);
+        this.userSessions.splice(index, 1);
+      }
+
+      // Emit the event to notify the parent component (HomeSessionsView)
+      this.$emit("toggle-item-status", sessionId);
+    },
+
+// toggleItemStatus(sessionId) {
+//   if (!this.userSessions.includes(sessionId)) {
+//     const session = this.sessions.find(s => s.id === sessionId);
+//     if (session) {
+//       this.userSessions.push(sessionId);
+//     } else {
+//       const index = this.userSessions.indexOf(sessionId);
+//       this.userSessions.splice(index, 1);
+//     }
+
+//     this.$emit('toggle-item-status', sessionId);
+//   }
+// }
   },
   emits: ['toggle-item-status'], // Declare the emitted event
 
